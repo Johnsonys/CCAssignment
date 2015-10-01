@@ -1,5 +1,9 @@
 public class Solution10
 {
+	/**
+	 *  Solution idea:
+	 *  Cite cc189
+	**/
 	public class RankNode 
 	{
 	    	public int leftSize = 0;
