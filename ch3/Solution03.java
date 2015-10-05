@@ -50,7 +50,7 @@ public class Solution03
 		}
 		return result;
 	}
-
+	//follow up
 	public int popAt(int index)
 	{
 		Stack stack = set.get(index);
