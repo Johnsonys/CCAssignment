@@ -1,14 +1,14 @@
-public class Solution06
-{
-	/**
-	 *  Solution idea:
-	 *
-	 *  Since the data size is very large, and the memory is limited.
-	 *  So each time, we just bring part of the data into memory.
-	 *  we sort each chunk separately and then save them to the file system.
-	 *  once all the chunks are sorted, we merge the chunks one by one, 
-	 *  and have a fully sorted file.
-	 *  (cite cc189)
-	**/
+public class Solution06 {
+     public static int bitNeeded(int A, int B) {
+    	 int count = 0;
+    	 //Check every bit of C to see if it equals 1
+    	 for (int C = A ^ B; C != 0; C = C >> 1) {
+    		 count += C & 1;  
+    	 }
+    	 return count;
+     }
+     public static void main(String[] args) {
+    	 int A = 1, B = 5;
+    	 System.out.println(bitNeeded(A, B));
+     }
 }
-

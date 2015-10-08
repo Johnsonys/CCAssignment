@@ -1,58 +1,25 @@
-import java.util.*;
-
-public class Solution01
-{
-	/**
-	 *  Solution idea:
-	 *  Since array A and B are both sorted, we can use binary search 
-	 *  to insert element from B into A.
-	 *  
-	 *  Also, we can merge A and B backwards.
-	**/
-
-	public void merge(int[] a, int[] b, int len) //"len" represent the "true" length of array A
-	{
-		int start = 0;
-		int count = 0;
-		for(int i = 0; i < b.length; i++)
-		{
-			start = insert(a, b[i], start, len - 1 + count);
-			for(int j = len - 1 + count; j >= start; j--)
-				a[j + 1] = a[j];
-			a[start] = b[i];
-			count++;
-		}
+public class Solution01 {
+	public static int insertionMtoN(int N, int M, int i, int j) {
+		int allOnes = ~0;
+		//Create 1s before position j, 0s after position j
+		int left = allOnes << (j + 1);
+		//create 1s after position i
+		int right = (1 << i) - 1;
+		//create mask which has all 0s between i and j
+		int mask = left | right;
+		//clear bits j through i 
+		int clearedN = N & mask;
+		//move m to right position
+		int shiftedM = M << i;
+		//merge M into N
+		return clearedN | shiftedM;
 	}
-
-	public int insert(int[] a, int ele, int start, int end)
-	{
-		int middle;
-		while(start < end)
-		{
-			middle = start + (end - start)/2;
-			if(ele < a[middle])
-				end = middle - 1;
-			else if(ele > a[middle])
-				start = middle + 1;
-			else
-				return middle;
-		}
-		if(ele > a[start])
-			return start + 1;
-		return start;
+	public static void main(String[] args) {
+		int N = 1024;
+		int M = 19;
+		int i = 2, j = 6;
+		System.out.println(insertionMtoN(N, M, i, j));
 	}
+	
 
-	public static void main(String[] args)
-	{
-		Solution01 solu = new Solution01();
-
-		int[] a = {1,3,5,7,9,0,0,0,0,0};
-		int[] b = {2,4,6,8,10};
-
-		System.out.println(Arrays.toString(a));
-		System.out.println(Arrays.toString(b));
-		solu.merge(a,b,5);
-		System.out.println(Arrays.toString(a));
-	}
 }
-

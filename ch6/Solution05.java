@@ -1,22 +1,12 @@
-import java.util.*;
-
-public class Solution05
-{
-	/**
-	 *  Solution idea:
-	 *  Binary search can be a choice, but maybe not the best solution.
-	 *  "for loop" is a easier way to implement.
-	 *  
-	**/
-
-	public int search(String[] str, String target)
-	{
-		for(int i = 0; i < str.length; i++)
-		{
-			if(str[i].equals(target))
-				return i;
-		}
-		return -1;
-	}
-}
-
+/**
+Problem: Jugs of water
+Solution:
+       Action                               5-quart               3-quart 
+filled 5-quart jug                             5                    0
+filled 3-quart jug with 5-quart's contents     2                    3
+dumped 3-quart                                 2                    0
+fill 3-quart with 5-quart's contents           0                    2
+filled 5-quart                                 5                    2
+filled remainder of 3-quart with 5-quart's     4                    3
+content
+**/

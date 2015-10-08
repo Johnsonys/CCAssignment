@@ -1,36 +1,27 @@
 public class Solution08 {
-	/**
-	 *  Solution idea:
-	 *  Since we have 4KB memory, we can use these 4*1024*8 bits(32 * 2^10 bits)
-	 *  to store the statue of number.
- 	**/
+    public static void drawLine(byte[] screen, int w, int x1, int x2, int y){
+        int start = y * w / 8 + x1 / 8;
+        int end = y * w / 8 + x2 / 8;
 
-    class BitSet {
-    	int[] bitset;
-    	public BitSet(int size) {
-    		bitset = new int[size >> 5 + 1]; //int => 4 bytes(32 bit)
-    	}
-    	public boolean get(int pos) {
-    		int numberIndex = pos >> 5;
-    		int bitIndex = pos & 0x1F;
-    		return (bitset[numberIndex] & (1 << bitIndex)) != 0;
-    	}
-    	public void set(int pos) {
-    		int numberIndex = pos >> 5;
-    		int bitIndex = pos & 0x1F;
-    		bitset[numberIndex] |= 1 << bitIndex;
-    	}	
-    }
-    public void checkDuplicates(int[] array) {
-    	BitSet bs = new BitSet(32000);
-    	for (int i = 0; i < array.length; i++) {
-    		int num = array[i];
-    		int num0 = num - 1;  //bitset starts at 0, numbers start at 1.
-    		if (bs.get(num0)) {
-    			System.out.println(num);
-    		} else {
-    			bs.set(num0);
-    		}
-    	}
+        byte mask=0;
+        for (int i=x1%8; i<8; i++){
+            mask = (byte) (mask << 1);
+            mask++;
+        }
+        screen[start] = (byte) (screen[start] | mask);
+
+        mask = (byte) 0b11111111;
+        for (int i=start+1; i<end; i++){
+            screen[i] = (byte) (screen[i] | mask);
+        }
+
+        mask = 0;
+        for (int i=0; i<=x2%8; i++){
+            mask = (byte) (mask << (byte)1);
+            mask++;
+        }
+        screen[end] = (byte) (screen[end] | mask);
+
+        return;
     }
 }

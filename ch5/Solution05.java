@@ -2,21 +2,11 @@ import java.util.*;
 
 public class Solution05
 {
-	/**
-	 *  Solution idea:
-	 *  Binary search can be a choice, but maybe not the best solution.
-	 *  "for loop" is a easier way to implement.
-	 *  
-	**/
-
-	public int search(String[] str, String target)
-	{
-		for(int i = 0; i < str.length; i++)
-		{
-			if(str[i].equals(target))
-				return i;
-		}
-		return -1;
-	}
+	/** Explain what the following code does: ((n & (n - 1)) == 0)
+	 *  Firstly, if A & B == 0, it means A and B have no common 1s in the same place.
+	 *  Secondly, if subtracting 1 from n, it means n's initial 0s will be 1s in n - 1.
+     *  and n's least significant 1 will be 0 in n - 1.
+     *  So what ((n & (n - 1)) == 0) does is not check if n is a power of 2.
+     **/
 }
 

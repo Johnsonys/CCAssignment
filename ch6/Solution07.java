@@ -1,38 +1,29 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Scanner;
-
-public class Solution07
-{
-	/**
-	 *  Solution idea:
-	 *  Use a bit vector with 4 billion bits to represent the
-	 *  status of every int.
-	**/
-
-	long numberOfInts = ((long) Integer.MAX_VALUE) + 1;
-	byte[] bitfield = new byte[(int) (numberOfInts / 8)];
-	String filename;
-	public void findOpenNumber() throws FileNotFoundException 
-	{
-	  Scanner in = new Scanner(new FileReader(filename));
-	  while (in.hasNext()) 
-	  {
-		  int n =  in.nextInt();
-		  bitfield[n / 8] |= 1 << (n % 8);
-	  }
-	  for (int i = 0; i < bitfield.length; i++) 
-	  {
-		  for (int j = 0; j < 8; j++) 
-		  {
-			  //if equals 0, then is the corresponding value
-			  if ((bitfield[i] & (1 << j)) == 0) 
-			  {
-				  System.out.println(i * 8 + j);
-				  return;
-			  }
-		  }
-	  }
-	}
+public class Solution07 {
+   public static int[] runOneFamily() {
+	   Random random = new Random();
+	   int boys = 0;
+	   int girls = 0;
+	   while (girls == 0) {
+		   if (random.nextBoolean()) {
+			   girls += 1;
+		   } else {
+			   boys += 1;
+		   }
+	   }
+	   int[] genders = {girls, boys};
+	   return genders;
+   }
+   public static double runNFamilies(int n) {
+	   int boys = 0;
+	   int girls = 0;
+	   for (int i = 0; i < n; i++) {
+		   int[] genders = runOneFamily();
+		   girls += genders[0];
+		   boys += genders[1];
+	   }
+	   return girls / (double) (boys + girls);
+   }
+   public static void main(String[] args) {
+	   System.out.println(runNFamilies(10000));
+   }
 }
-

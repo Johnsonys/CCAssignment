@@ -1,57 +1,43 @@
-import java.util.*;
-
-public class Solution03
-{
-	/**
-	 *  Solution idea:
-	 *  Use binary search to find the element
-	**/
-
-	public int search(int[] arr, int ele)
-	{
-		int lo = 0;
-		int hi = arr.length - 1;
-		int mid;
-
-		while(lo + 1 < hi)
-		{
-			mid = lo + (hi - lo)/2;
-			if(ele == arr[mid])
-				return mid;
-			if(arr[lo] < arr[mid])
-			{
-				if(arr[lo] < ele && ele <= arr[mid])
-					hi = mid;
-				else
-					lo = mid;
-			}
-			else
-			{
-				if(arr[mid] <= ele && ele <= arr[hi])
-					lo = mid;
-				else
-					hi = mid;
-			}
+public class Solution03 {
+	static int SEQUENCE_LENGTH = 32;
+	static int finalSequence = 0;
+	public static int getMaxSequence(int[] sequences) {
+		if (sequences[1] == 1) {
+			return sequences[0] + sequences[2] + 1;
+		} else if (sequences[1] == 0) {
+			return Math.max(sequences[0], sequences[2]);
+		} else {
+			return Math.max(sequences[0], sequences[2]) + 1;
 		}
-		if(ele == arr[lo])
-			return lo;
-		else if(ele == arr[hi])
-			return hi;
-		else 
-			return -1;
+	}
+	public static void shift(int[] sequences) {
+		sequences[2] = sequences[1];
+		sequences[1] = sequences[0];
+		sequences[0] = 0;
+	}
+	public static int longestSequence(int n) {
+		int searchingFor = 0;
+		int[] sequences = {0, 0, 0};
+		int maxSequence = 1;
+		for (int i = 0; i < SEQUENCE_LENGTH; i++) {
+			if ((n & 1) != searchingFor) {
+				if (searchingFor == 1) {
+					maxSequence = Math.max(maxSequence, getMaxSequence(sequences));
+				}
+				searchingFor = n & 1;
+				shift(sequences);
+			}
+			sequences[0]++;
+			n >>>= 1;
+		}
+		// check final set of sequences
+		if (searchingFor == 0) {
+			shift(sequences);
+		}
+		return Math.max(finalSequence, getMaxSequence(sequences));
+	}
+	public static void main(String[] args) {
+		System.out.println(longestSequence(9));
 	}
 
-	public static void main(String[] args)
-	{
-		Solution03 solu = new Solution03();
-
-		int[] a = {7,8,1,2,3,4,5,6};
-
-		System.out.println(Arrays.toString(a));
-		System.out.print("The index of 8 is: ");
-		System.out.println(solu.search(a, 8));
-		System.out.print("The index of 1 is: ");
-		System.out.println(solu.search(a, 1));
-	}
 }
-
